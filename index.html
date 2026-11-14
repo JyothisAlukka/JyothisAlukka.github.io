@@ -91,15 +91,38 @@ h2.hand{font-size:clamp(2.6rem,5vw,3.4rem);line-height:1;margin-bottom:16px;disp
 footer{margin-top:64px;padding-top:24px;border-top:1px solid rgba(255,255,255,.25);font-size:.9rem}
 @media (max-width:760px){.wrap{padding:0 20px}.dash{grid-template-columns:1fr}.tabs{flex-direction:row;overflow-x:auto;padding:4px 4px 12px}.tab{white-space:nowrap}nav{justify-content:flex-start;gap:20px}.card{padding:24px}section{padding-top:72px}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.term::after{animation:none}.c,.g{animation:none}}
+
+html{scroll-padding-top:calc(64px + env(safe-area-inset-top,0px))}
+.progress{position:fixed;top:0;left:0;height:4px;width:0;background:var(--gold);z-index:40}
+.float{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;gap:28px;justify-content:center;padding:calc(14px + env(safe-area-inset-top,0px)) 16px 12px;background:var(--navy);transform:translateY(-110%);transition:transform .35s ease;white-space:nowrap}
+.float.show{transform:none}
+.float a{color:var(--white);text-decoration:none;font-weight:500;font-size:.92rem;border-bottom:2px solid transparent;padding:2px 0}
+.float a:hover{border-bottom-color:var(--gold)}
+.float a.on{color:var(--gold);border-bottom-color:var(--gold)}
+.cyc{display:inline-block;color:var(--gold);transition:opacity .3s,transform .3s}
+.cyc.out{opacity:0;transform:translateY(8px)}
+.aboutgrid{display:grid;grid-template-columns:1.4fr 1fr;gap:32px;align-items:start}
+.aboutp{font-size:1.1rem;max-width:none}
+.facts{list-style:none;margin:0;padding:24px;border:2px solid var(--navy);box-shadow:5px 5px 0 var(--gold);background:var(--white);display:grid;gap:14px}
+.facts b{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em}
+.chip{transition:transform .15s,background .15s}
+.chip:hover{transform:translateY(-2px)}
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease,box-shadow .2s ease}
+.js .reveal.in{opacity:1;transform:none}
+.js .proj.reveal.in:hover,.js .kpi.reveal.in:hover{transform:translate(-4px,-4px);box-shadow:9px 9px 0 var(--gold)}
+@media (max-width:760px){.aboutgrid{grid-template-columns:1fr}.float{justify-content:flex-start;overflow-x:auto;gap:22px}}
+@media (prefers-reduced-motion:reduce){.float{transition:none}.cyc{transition:none}}
 </style>
 </head>
 <body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<nav class="float" id="float" aria-label="Quick navigation"><a href="#about">About</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#education">Education</a><a href="#contact">Contact</a></nav>
 <div class="band"><canvas id="rain" aria-hidden="true"></canvas>
-<header class="wrap"><nav aria-label="Sections"><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#education">Education</a><a href="#contact">Contact</a></nav></header>
+<header class="wrap"><nav aria-label="Sections"><a href="#about">About</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#education">Education</a><a href="#contact">Contact</a></nav></header>
 <div class="wrap hero">
   <p class="term" aria-hidden="true"><span id="typed"></span></p>
   <h1 class="hand">A Jyothis Raphael Joseph</h1>
-  <p class="role">Python Developer · Data Science &amp; AI/ML · Bengaluru, India</p>
+  <p class="role">Python Developer · <span id="cycle" class="cyc">Data Science</span> · Bengaluru, India</p>
   <p class="lede">I build data analysis, machine learning and NLP solutions in Python, backed by REST APIs, SQL and Git.</p>
   <p class="note hand">this page is a dashboard, so click around<svg viewBox="0 0 54 36" aria-hidden="true"><path d="M4 6 C24 0 44 10 46 30 M37 24 L46 32 L51 19"/></svg></p>
 </div></div>
@@ -112,17 +135,23 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid rgba(255,255,255,.2
   <div class="kpi"><b data-n="4">4</b><span>Certifications</span></div>
 </div>
 
+<section id="about"><div class="wrap">
+  <h2 class="hand">About me</h2>
+  <div class="aboutgrid">
+    <p class="aboutp">Python Developer with hands-on experience in data analysis, machine learning, deep learning and NLP using Python, Pandas, NumPy, TensorFlow and scikit-learn. Experienced in data cleaning, exploratory data analysis, model building and evaluation, and data visualization with Matplotlib, Plotly and Power BI. Solid backend foundation in REST APIs, SQL and Git, with a strong grasp of Data Structures, Algorithms and the software development lifecycle.</p>
+    <ul class="facts">
+      <li><b>Based in</b>Bengaluru, India</li>
+      <li><b>Currently</b>Software Engineer Trainee, LycaDigital</li>
+      <li><b>Focus</b>Python, data science, AI/ML and backend APIs</li>
+      <li><b>Education</b>B.E. Computer Science (Data Science), 2025</li>
+    </ul>
+  </div>
+</div></section>
+
 <section id="projects"><div class="wrap">
   <h2 class="hand">Projects</h2>
   <p class="sub">Five projects, with the code on GitHub where it is available.</p>
   <div class="plist" id="plist"></div>
-</div></section>
-
-<section id="skills"><div class="wrap">
-  <h2 class="hand">Skills</h2>
-  <p class="sub">Click a skill to see where I used it.</p>
-  <div class="groups" id="groups"></div>
-  <p id="skillnote" class="hand" aria-live="polite"></p>
 </div></section>
 
 <section id="experience"><div class="wrap">
@@ -137,6 +166,13 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid rgba(255,255,255,.2
       <li>Collaborated in Agile Scrum teams, using Jira for task tracking and sprint coordination.</li>
     </ul>
   </div>
+</div></section>
+
+<section id="skills"><div class="wrap">
+  <h2 class="hand">Skills</h2>
+  <p class="sub">Click a skill to see where I used it.</p>
+  <div class="groups" id="groups"></div>
+  <p id="skillnote" class="hand" aria-live="polite"></p>
 </div></section>
 
 <section id="education"><div class="wrap">
@@ -223,6 +259,17 @@ function init(){var b=cv.parentNode;cv.width=b.offsetWidth;cv.height=b.offsetHei
 function step(){ctx.fillStyle='rgba(20,40,75,0.12)';ctx.fillRect(0,0,cv.width,cv.height);ctx.font=sz+'px monospace';
  for(var k=0;k<cols;k++){ctx.fillStyle=(k%5===0)?'#E8A317':'#FFFFFF';ctx.fillText(chars.charAt(Math.floor(Math.random()*chars.length)),k*sz,dr[k]*sz);if(dr[k]*sz>cv.height&&Math.random()>0.97)dr[k]=0;dr[k]+=1;}}
 init();if(still){for(var n=0;n<40;n++)step();}else{setInterval(step,70);}
+var rm=still;
+var cyc=document.getElementById('cycle'),words=['Data Science','AI &amp; ML','NLP','Backend APIs'],wi=0;
+if(cyc&&!rm){cyc.innerHTML=words[0];setInterval(function(){cyc.classList.add('out');setTimeout(function(){wi=(wi+1)%words.length;cyc.innerHTML=words[wi];cyc.classList.remove('out');},320);},2400);}
+var fl=document.getElementById('float'),pg=document.getElementById('progress'),bd=document.querySelector('.band');
+var lk=[].slice.call(fl.querySelectorAll('a')),sc=lk.map(function(a){return document.querySelector(a.getAttribute('href'));});
+function onScroll(){var y=window.pageYOffset,h=document.documentElement.scrollHeight-window.innerHeight;pg.style.width=(h>0?y/h*100:0)+'%';fl.classList.toggle('show',y>bd.offsetHeight-60);var c=-1;sc.forEach(function(e,i){if(e&&e.getBoundingClientRect().top<window.innerHeight*0.35)c=i;});lk.forEach(function(a,i){a.classList.toggle('on',i===c);});}
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+if(!rm&&'IntersectionObserver' in window){document.documentElement.classList.add('js');
+ var els=[].slice.call(document.querySelectorAll('section .wrap>*,.kpi,.proj')).filter(function(e){return e.id!=='plist';});
+ var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){var e=x.target;e.classList.add('in');setTimeout(function(){e.style.transitionDelay='';},1000);io.unobserve(e);}});},{threshold:0.12});
+ els.forEach(function(e,i){e.classList.add('reveal');e.style.transitionDelay=((i%3)*90)+'ms';io.observe(e);});}
 window.addEventListener('resize',init);
 })();
 </script>
